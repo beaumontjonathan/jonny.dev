@@ -1,40 +1,69 @@
-import { GithubLogoVersion2 } from "./GithubLogo";
-import { LinkedInLogo } from "./LinkedInLogo";
+import { create, keyframes, props } from "@stylexjs/stylex";
+import { GithubLogo } from "./assets/GithubLogo";
+import { LinkedInLogo } from "./assets/LinkedInLogo";
+
+const fadeIn = keyframes({
+  "0%": { opacity: 0 },
+  "40%": { opacity: 0 },
+  "100%": { opacity: 1 },
+});
+
+const glideUp = keyframes({
+  from: { transform: "translateY(10px)" },
+  to: { transform: "translateY(0px)" },
+});
+
+const styles = create({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 32,
+    margin: "0 auto",
+    maxWidth: "1280px",
+    padding: "2rem",
+    placeItems: "center",
+    textAlign: "center",
+  },
+  heading: {
+    animationDuration: "800ms, 1000ms",
+    animationName: `${fadeIn}, ${glideUp}`,
+    animationTimingFunction: "ease-out, ease-out",
+    margin: 0,
+  },
+  subHeading: {
+    animationDuration: "800ms, 1000ms",
+    animationName: `${fadeIn}, ${glideUp}`,
+    animationTimingFunction: "ease-out, ease-out",
+    fontWeight: 300,
+    margin: 0,
+  },
+  links: {
+    animationDuration: "800ms, 1000ms",
+    animationName: `${fadeIn}, ${glideUp}`,
+    animationTimingFunction: "ease-out, ease-out",
+    display: "flex",
+    flexDirection: "row",
+    gap: 16,
+    justifyContent: "stretch",
+  },
+  linkIcon: {
+    display: "block",
+    height: 20,
+    width: 20,
+  },
+});
 
 function App() {
   return (
-    <div
-      style={{
-        maxWidth: "1280px",
-        margin: "0 auto",
-        padding: "2rem",
-        display: "flex",
-        flexDirection: "column",
-        placeItems: "center",
-        textAlign: "center",
-        gap: 32,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>jonathan beaumont</h1>
-      <h2 style={{ margin: 0, fontWeight: 300 }}>i write code</h2>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 16,
-          marginTop: 32,
-          justifyContent: "stretch",
-        }}
-      >
-        <a href="https://github.com/beaumontjonathan">
-          <span style={{ paddingTop: 2 }}>beaumontjonathan</span>
-          <GithubLogoVersion2
-            style={{ display: "block", width: 20, height: 20 }}
-          />
-        </a>
+    <div {...props(styles.root)}>
+      <h1 {...props(styles.heading)}>jonathan beaumont</h1>
+      <h2 {...props(styles.subHeading)}>i write code</h2>
+      <div {...props(styles.links)}>
         <a href="https://www.linkedin.com/in/jonathan-beaumont-403187147">
-          <span style={{ paddingTop: 2 }}>jonathan beaumont</span>
-          <LinkedInLogo style={{ display: "block", width: 20, height: 20 }} />
+          <LinkedInLogo {...props(styles.linkIcon)} />
+        </a>
+        <a href="https://github.com/beaumontjonathan">
+          <GithubLogo {...props(styles.linkIcon)} />
         </a>
       </div>
     </div>

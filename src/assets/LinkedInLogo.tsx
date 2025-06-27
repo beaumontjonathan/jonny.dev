@@ -1,4 +1,4 @@
-import { StyleProps } from "./types";
+import type { StyleProps } from "../types";
 
 export const LinkedInLogo = ({ style, className }: StyleProps) => (
   <svg
