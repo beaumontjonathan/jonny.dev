@@ -3,6 +3,7 @@ import { Mail } from "lucide-react";
 import { GithubLogo } from "./assets/GithubLogo";
 import { LinkedInLogo } from "./assets/LinkedInLogo";
 import avatar from "./assets/avatar.jpeg";
+import { useState } from "react";
 
 const fadeIn = keyframes({
   "0%": { opacity: 0 },
@@ -11,7 +12,7 @@ const fadeIn = keyframes({
 });
 
 const glideUp = keyframes({
-  from: { transform: "translateY(10px)" },
+  from: { transform: "translateY(20px)" },
   to: { transform: "translateY(0px)" },
 });
 
@@ -26,32 +27,67 @@ const styles = create({
     placeItems: "center",
     textAlign: "center",
   },
-  avatar: {
-    animationDuration: "1600ms, 2000ms",
+  avatarRoot: {
+    WebkitTapHighlightColor: "transparent",
+    animationDuration: `1600ms, 2000ms`,
     animationName: `${fadeIn}, ${glideUp}`,
     animationTimingFunction: "ease-out, ease-out",
-    borderColor: "currentColor",
     borderRadius: "100%",
-    borderStyle: "solid",
-    borderWidth: "2px",
-    height: 160,
-    width: 160,
+    borderTopRightRadius: 0,
+    cursor: "pointer",
+    position: "relative",
   },
+  avatarNudge: {
+    alignItems: "center",
+    borderRadius: "100%",
+    boxShadow: "inset 0 0 0 2px currentColor",
+    boxSizing: "border-box",
+    display: "flex",
+    fontSize: "12px",
+    height: 34,
+    justifyContent: "center",
+    opacity: 0,
+    paddingTop: 3,
+    position: "absolute",
+    right: -3,
+    top: -3,
+    transform: "translateX(-100%) translateY(100%) scale(0)",
+    transition:
+      "transform 500ms cubic-bezier(.15,.26,.28,.95), opacity 500ms cubic-bezier(.15,.26,.28,.95)",
+    width: 34,
+  },
+  avatarNudgeHover: {
+    opacity: 1,
+    transform: "translateX(10px) translateY(-10px) scale(1)",
+    visibility: "visible",
+  },
+  avatar: {
+    borderRadius: "100%",
+    boxShadow: "0 0 0 2px currentColor",
+    cursor: "pointer",
+    display: "block",
+    height: 160,
+    position: "relative",
+    transition: "150ms ease-in-out box-shadow",
+    width: 160,
+    zIndex: 2,
+  },
+  avatarHover: {},
   heading: {
-    animationDuration: "1450ms, 1850ms",
+    animationDuration: `1450ms, 1850ms`,
     animationName: `${fadeIn}, ${glideUp}`,
     animationTimingFunction: "ease-out, ease-out",
     margin: 0,
   },
   subHeading: {
-    animationDuration: "1300ms, 1700ms",
+    animationDuration: `1300ms, 1700ms`,
     animationName: `${fadeIn}, ${glideUp}`,
     animationTimingFunction: "ease-out, ease-out",
     fontWeight: 300,
     margin: 0,
   },
   links: {
-    animationDuration: "1150ms, 1550ms",
+    animationDuration: `1150ms, 1550ms`,
     animationName: `${fadeIn}, ${glideUp}`,
     animationTimingFunction: "ease-out, ease-out",
     display: "flex",
@@ -67,9 +103,25 @@ const styles = create({
 });
 
 function App() {
+  const [avatarHover, setAvatarHover] = useState(false);
+
   return (
     <div {...props(styles.root)}>
-      <img src={avatar} {...props(styles.avatar)} />
+      <div
+        {...props(styles.avatarRoot)}
+        onMouseEnter={() => setAvatarHover(true)}
+        onMouseLeave={() => setAvatarHover(false)}
+      >
+        <div
+          {...props(styles.avatarNudge, avatarHover && styles.avatarNudgeHover)}
+        >
+          hi
+        </div>
+        <img
+          src={avatar}
+          {...props(styles.avatar, avatarHover && styles.avatarHover)}
+        />
+      </div>
       <h1 {...props(styles.heading)}>jonathan beaumont</h1>
       <h2 {...props(styles.subHeading)}>code, product, more</h2>
       <div {...props(styles.links)}>
